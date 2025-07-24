@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { dishes, categories } from '@/lib/data';
 import type { Dish } from '@/lib/types';
 import { Button } from '@/components/ui/button';
@@ -8,12 +8,61 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import Image from 'next/image';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { DishDetailDialog } from '@/components/DishDetailDialog';
+import { generateImage } from '@/ai/flows/generate-image';
+import { Skeleton } from '@/components/ui/skeleton';
+
+interface GeneratedImage {
+  dishId: number;
+  imageUrl: string;
+}
 
 export function Menu() {
   const [selectedCategory, setSelectedCategory] = useState<string>(categories[0].id);
   const [selectedDish, setSelectedDish] = useState<Dish | null>(null);
+  const [generatedImages, setGeneratedImages] = useState<Record<number, string>>({});
+  const [loadingStates, setLoadingStates] = useState<Record<number, boolean>>({});
 
   const filteredDishes = dishes.filter(dish => dish.category === selectedCategory);
+
+  useEffect(() => {
+    const generateAllImages = async () => {
+      const imagePromises = dishes.map(async (dish) => {
+        if (!generatedImages[dish.id]) {
+          setLoadingStates((prev) => ({ ...prev, [dish.id]: true }));
+          try {
+            const result = await generateImage({ prompt: dish.name });
+            return { dishId: dish.id, imageUrl: result.imageUrl };
+          } catch (error) {
+            console.error(`Failed to generate image for ${dish.name}:`, error);
+            return null;
+          } finally {
+            setLoadingStates((prev) => ({ ...prev, [dish.id]: false }));
+          }
+        }
+        return null;
+      });
+
+      const results = await Promise.all(imagePromises);
+      const newImages = results.reduce((acc, result) => {
+        if (result) {
+          acc[result.dishId] = result.imageUrl;
+        }
+        return acc;
+      }, {} as Record<number, string>);
+
+      setGeneratedImages((prev) => ({ ...prev, ...newImages }));
+    };
+
+    generateAllImages();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  
+  const getDishWithGeneratedImage = (dish: Dish): Dish => {
+    return {
+      ...dish,
+      image: generatedImages[dish.id] || dish.image,
+    };
+  };
 
   return (
     <>
@@ -33,19 +82,27 @@ export function Menu() {
 
       <Dialog open={!!selectedDish} onOpenChange={(isOpen) => !isOpen && setSelectedDish(null)}>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredDishes.map((dish) => (
-            <DialogTrigger key={dish.id} asChild onClick={() => setSelectedDish(dish)}>
+          {filteredDishes.map((dish) => {
+            const isLoading = loadingStates[dish.id] ?? false;
+            const imageUrl = generatedImages[dish.id];
+
+            return(
+            <DialogTrigger key={dish.id} asChild onClick={() => setSelectedDish(getDishWithGeneratedImage(dish))}>
               <Card className="group flex flex-col overflow-hidden transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl cursor-pointer">
                 <CardHeader className="p-0">
-                  <div className="overflow-hidden">
+                  <div className="overflow-hidden aspect-[4/2.5] relative">
+                    {isLoading || !imageUrl ? (
+                      <Skeleton className="w-full h-full" />
+                    ) : (
                     <Image
-                      src={dish.image}
+                      src={imageUrl}
                       alt={dish.name}
                       width={400}
                       height={250}
-                      className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                       data-ai-hint={dish.dataAiHint}
                     />
+                    )}
                   </div>
                 </CardHeader>
                 <CardContent className="flex-grow p-4">
@@ -58,7 +115,7 @@ export function Menu() {
                 </CardFooter>
               </Card>
             </DialogTrigger>
-          ))}
+          )})}
         </div>
         {selectedDish && <DishDetailDialog dish={selectedDish} />}
       </Dialog>

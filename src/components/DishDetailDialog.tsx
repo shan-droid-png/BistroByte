@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
 import { DietarySuggestions } from './DietarySuggestions';
 import { Separator } from './ui/separator';
+import { Skeleton } from './ui/skeleton';
 
 interface DishDetailDialogProps {
   dish: Dish;
@@ -28,15 +29,19 @@ export function DishDetailDialog({ dish }: DishDetailDialogProps) {
   return (
     <DialogContent className="sm:max-w-3xl">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <Image
-            src={dish.image}
-            alt={dish.name}
-            width={600}
-            height={400}
-            className="w-full h-auto rounded-lg object-cover"
-            data-ai-hint={dish.dataAiHint}
-          />
+        <div className="aspect-video">
+          {dish.image.startsWith('data:image') ? (
+            <Image
+              src={dish.image}
+              alt={dish.name}
+              width={600}
+              height={400}
+              className="w-full h-full rounded-lg object-cover"
+              data-ai-hint={dish.dataAiHint}
+            />
+          ) : (
+            <Skeleton className="w-full h-full rounded-lg" />
+          )}
         </div>
         <div className="flex flex-col">
           <DialogHeader>
