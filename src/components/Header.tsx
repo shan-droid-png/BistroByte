@@ -1,17 +1,12 @@
 'use client';
 
-import { GalleryHorizontal, QrCode, ShoppingCart, UtensilsCrossed } from 'lucide-react';
+import { GalleryHorizontal, QrCode, UtensilsCrossed } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useCart } from '@/hooks/use-cart';
-import { Badge } from '@/components/ui/badge';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Cart } from '@/components/Cart';
 import { QrCodeDialog } from '@/components/QrCodeDialog';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import Link from 'next/link';
 
 export function Header() {
-  const { totalItems } = useCart();
 
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/90 backdrop-blur-sm">
@@ -39,26 +34,6 @@ export function Header() {
               </DialogTrigger>
               <QrCodeDialog />
             </Dialog>
-
-            <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="relative">
-                  <ShoppingCart className="h-5 w-5" />
-                  {totalItems > 0 && (
-                    <Badge
-                      variant="destructive"
-                      className="absolute -top-1 -right-1 h-5 w-5 justify-center rounded-full p-0"
-                    >
-                      {totalItems}
-                    </Badge>
-                  )}
-                  <span className="sr-only">Open Cart</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent>
-                <Cart />
-              </SheetContent>
-            </Sheet>
           </nav>
         </div>
       </div>
