@@ -17,7 +17,7 @@ export const dishes: Dish[] = [
     name: 'Paneer Tikka',
     description: 'Marinated cottage cheese grilled in a tandoor with spices and yogurt.',
     price: 220,
-    image: 'https://storage.googleapis.com/stabl-media/rasoi-raj/paneer-tikka.jpg',
+    image: 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxQQU5FRVIlMjBUSUtLQXxlbnwwfHx8fDE3NTMzODczMTV8MA&ixlib=rb-4.1.0&q=80&w=1080',
     video: 'https://storage.googleapis.com/stabl-media/rasoi-raj/videos/paneer-tikka.mp4',
     dataAiHint: 'paneer tikka',
     category: 'starters',
