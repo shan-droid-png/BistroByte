@@ -6,8 +6,6 @@ import { Button } from '@/components/ui/button';
 import { DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
-import { DietarySuggestions } from './DietarySuggestions';
-import { Separator } from './ui/separator';
 
 interface DishDetailDialogProps {
   dish: Dish;
@@ -52,10 +50,6 @@ export function DishDetailDialog({ dish }: DishDetailDialogProps) {
               Add to Order
             </Button>
           </DialogFooter>
-
-          <Separator className="my-4" />
-          
-          <DietarySuggestions dish={dish} />
 
         </div>
       </div>
