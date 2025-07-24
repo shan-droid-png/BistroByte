@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { dishes, categories } from '@/lib/data';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 
@@ -36,18 +36,15 @@ export default function GalleryPage() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="flex flex-col gap-4 max-w-4xl mx-auto">
         {filteredDishes.map((dish) => {
           return (
             <Card 
               key={dish.id}
-              className="overflow-hidden transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl"
+              className="overflow-hidden transition-shadow duration-300 ease-in-out hover:shadow-xl w-full"
             >
-              <CardHeader>
-                <CardTitle className="font-headline">{dish.name}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="aspect-square relative">
+              <CardContent className="p-4 flex items-center gap-6">
+                <div className="w-32 h-32 relative flex-shrink-0">
                     <Image
                       src={dish.image}
                       alt={`Photo of ${dish.name}`}
@@ -56,6 +53,10 @@ export default function GalleryPage() {
                       className="rounded-md"
                       data-ai-hint={dish.dataAiHint}
                     />
+                </div>
+                <div className="flex-grow">
+                  <h3 className="text-xl font-bold font-headline">{dish.name}</h3>
+                  <p className="text-muted-foreground mt-1">{dish.description}</p>
                 </div>
               </CardContent>
             </Card>
