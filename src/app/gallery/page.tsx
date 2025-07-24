@@ -36,7 +36,7 @@ export default function GalleryPage() {
   }, []);
 
   const handleGenerateImage = async (dishId: number, dishName: string) => {
-    // Avoid regenerating if image already exists
+    // Avoid regenerating if image already exists or is currently loading
     if (images.some(img => img.dishId === dishId) || loading[dishId]) {
       return;
     }
@@ -83,7 +83,7 @@ export default function GalleryPage() {
             <Card 
               key={dish.id} 
               onClick={() => handleGenerateImage(dish.id, dish.name)}
-              className="cursor-pointer"
+              className="cursor-pointer overflow-hidden transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl"
             >
               <CardHeader>
                 <CardTitle className="font-headline">{dish.name}</CardTitle>
@@ -101,8 +101,8 @@ export default function GalleryPage() {
                   ) : isLoading ? (
                     <Skeleton className="w-full h-full rounded-md" />
                   ) : (
-                    <div className="w-full h-full rounded-md bg-muted flex items-center justify-center">
-                       <p className="text-sm text-center text-muted-foreground">Click to generate</p>
+                    <div className="w-full h-full rounded-md bg-muted flex items-center justify-center text-center p-4">
+                       <p className="text-sm text-muted-foreground">Click to generate image</p>
                     </div>
                   )}
                 </div>
