@@ -26,31 +26,19 @@ export function Menu() {
 
   useEffect(() => {
     const generateAllImages = async () => {
-      const imagePromises = dishes.map(async (dish) => {
+      for (const dish of dishes) {
         if (!generatedImages[dish.id]) {
           setLoadingStates((prev) => ({ ...prev, [dish.id]: true }));
           try {
             const result = await generateImage({ prompt: dish.name });
-            return { dishId: dish.id, imageUrl: result.imageUrl };
+            setGeneratedImages((prev) => ({ ...prev, [dish.id]: result.imageUrl }));
           } catch (error) {
             console.error(`Failed to generate image for ${dish.name}:`, error);
-            return null;
           } finally {
             setLoadingStates((prev) => ({ ...prev, [dish.id]: false }));
           }
         }
-        return null;
-      });
-
-      const results = await Promise.all(imagePromises);
-      const newImages = results.reduce((acc, result) => {
-        if (result) {
-          acc[result.dishId] = result.imageUrl;
-        }
-        return acc;
-      }, {} as Record<number, string>);
-
-      setGeneratedImages((prev) => ({ ...prev, ...newImages }));
+      }
     };
 
     generateAllImages();

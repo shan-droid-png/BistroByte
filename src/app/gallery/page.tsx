@@ -21,11 +21,13 @@ export default function GalleryPage() {
       for (const dish of dishes) {
         setLoading((prev) => ({ ...prev, [dish.id]: true }));
         try {
-          const result = await generateImage({ prompt: dish.name });
-          setImages((prev) => [...prev, { dishId: dish.id, imageUrl: result.imageUrl }]);
+          // Check if image already exists to avoid re-generating
+          if (!images.some(img => img.dishId === dish.id)) {
+            const result = await generateImage({ prompt: dish.name });
+            setImages((prev) => [...prev, { dishId: dish.id, imageUrl: result.imageUrl }]);
+          }
         } catch (error) {
           console.error(`Failed to generate image for ${dish.name}:`, error);
-          // Optionally, you could set an error state here
         } finally {
           setLoading((prev) => ({ ...prev, [dish.id]: false }));
         }
@@ -33,6 +35,7 @@ export default function GalleryPage() {
     };
 
     generateAllImages();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
