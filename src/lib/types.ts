@@ -22,3 +22,12 @@ export interface CartItem {
   dish: Dish;
   quantity: number;
 }
+
+export interface Offer {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  dataAiHint: string;
+  cta: string;
+}
