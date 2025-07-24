@@ -12,24 +12,50 @@ interface GeneratedImage {
   imageUrl: string;
 }
 
+const IMAGE_CACHE_KEY = 'bistrobyte_gallery_images';
+
 export default function GalleryPage() {
   const [images, setImages] = useState<GeneratedImage[]>([]);
   const [loading, setLoading] = useState<Record<number, boolean>>({});
 
   useEffect(() => {
+    const getCachedImages = () => {
+      try {
+        const cached = window.localStorage.getItem(IMAGE_CACHE_KEY);
+        return cached ? JSON.parse(cached) : [];
+      } catch (error) {
+        console.error("Failed to read from localStorage", error);
+        return [];
+      }
+    };
+    
+    const cachedImages = getCachedImages();
+    setImages(cachedImages);
+
     const generateAllImages = async () => {
+      const newImages = [...cachedImages];
       for (const dish of dishes) {
-        setLoading((prev) => ({ ...prev, [dish.id]: true }));
-        try {
-          // Check if image already exists to avoid re-generating
-          if (!images.some(img => img.dishId === dish.id)) {
+        // Check if image is already cached to avoid re-generating
+        if (!newImages.some(img => img.dishId === dish.id)) {
+          setLoading((prev) => ({ ...prev, [dish.id]: true }));
+          try {
             const result = await generateImage({ prompt: dish.name });
-            setImages((prev) => [...prev, { dishId: dish.id, imageUrl: result.imageUrl }]);
+            const newImage = { dishId: dish.id, imageUrl: result.imageUrl };
+            newImages.push(newImage);
+            setImages([...newImages]);
+
+            // Save the updated cache to localStorage
+            try {
+              window.localStorage.setItem(IMAGE_CACHE_KEY, JSON.stringify(newImages));
+            } catch (error) {
+              console.error("Failed to write to localStorage", error);
+            }
+
+          } catch (error) {
+            console.error(`Failed to generate image for ${dish.name}:`, error);
+          } finally {
+            setLoading((prev) => ({ ...prev, [dish.id]: false }));
           }
-        } catch (error) {
-          console.error(`Failed to generate image for ${dish.name}:`, error);
-        } finally {
-          setLoading((prev) => ({ ...prev, [dish.id]: false }));
         }
       }
     };
@@ -52,7 +78,7 @@ export default function GalleryPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {dishes.map((dish) => {
           const generatedImage = images.find((img) => img.dishId === dish.id);
-          const isLoading = loading[dish.id] ?? true;
+          const isLoading = loading[dish.id] ?? !generatedImage;
 
           return (
             <Card key={dish.id}>

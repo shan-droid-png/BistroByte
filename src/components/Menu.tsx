@@ -11,10 +11,7 @@ import { DishDetailDialog } from '@/components/DishDetailDialog';
 import { generateImage } from '@/ai/flows/generate-image';
 import { Skeleton } from '@/components/ui/skeleton';
 
-interface GeneratedImage {
-  dishId: number;
-  imageUrl: string;
-}
+const IMAGE_CACHE_KEY = 'bistrobyte_gallery_images';
 
 export function Menu() {
   const [selectedCategory, setSelectedCategory] = useState<string>(categories[0].id);
@@ -25,13 +22,44 @@ export function Menu() {
   const filteredDishes = dishes.filter(dish => dish.category === selectedCategory);
 
   useEffect(() => {
+    const getCachedImages = () => {
+      try {
+        const cached = window.localStorage.getItem(IMAGE_CACHE_KEY);
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          const imageMap: Record<number, string> = {};
+          parsed.forEach((item: { dishId: number; imageUrl: string }) => {
+            imageMap[item.dishId] = item.imageUrl;
+          });
+          return imageMap;
+        }
+      } catch (error) {
+        console.error("Failed to read from localStorage", error);
+      }
+      return {};
+    };
+
+    const cachedImages = getCachedImages();
+    setGeneratedImages(cachedImages);
+
     const generateAllImages = async () => {
+      const newImageCache: Array<{ dishId: number; imageUrl: string }> = Object.entries(cachedImages).map(([dishId, imageUrl]) => ({ dishId: Number(dishId), imageUrl }));
+      
       for (const dish of dishes) {
-        if (!generatedImages[dish.id]) {
+        if (!cachedImages[dish.id]) {
           setLoadingStates((prev) => ({ ...prev, [dish.id]: true }));
           try {
             const result = await generateImage({ prompt: dish.name });
             setGeneratedImages((prev) => ({ ...prev, [dish.id]: result.imageUrl }));
+            
+            // Add to cache and save
+            newImageCache.push({ dishId: dish.id, imageUrl: result.imageUrl });
+            try {
+              window.localStorage.setItem(IMAGE_CACHE_KEY, JSON.stringify(newImageCache));
+            } catch (error) {
+               console.error("Failed to write to localStorage", error);
+            }
+
           } catch (error) {
             console.error(`Failed to generate image for ${dish.name}:`, error);
           } finally {
@@ -71,19 +99,19 @@ export function Menu() {
       <Dialog open={!!selectedDish} onOpenChange={(isOpen) => !isOpen && setSelectedDish(null)}>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredDishes.map((dish) => {
-            const isLoading = loadingStates[dish.id] ?? false;
             const imageUrl = generatedImages[dish.id];
+            const isLoading = loadingStates[dish.id] ?? !imageUrl;
 
             return(
             <DialogTrigger key={dish.id} asChild onClick={() => setSelectedDish(getDishWithGeneratedImage(dish))}>
               <Card className="group flex flex-col overflow-hidden transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl cursor-pointer">
                 <CardHeader className="p-0">
                   <div className="overflow-hidden aspect-[4/2.5] relative">
-                    {isLoading || !imageUrl ? (
+                    {isLoading ? (
                       <Skeleton className="w-full h-full" />
                     ) : (
                     <Image
-                      src={imageUrl}
+                      src={imageUrl || dish.image}
                       alt={dish.name}
                       width={400}
                       height={250}
