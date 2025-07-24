@@ -6,6 +6,7 @@ export interface Dish {
   description: string;
   price: number;
   image: string;
+  video: string;
   category: string;
   ingredients: string[];
   dataAiHint: string;
