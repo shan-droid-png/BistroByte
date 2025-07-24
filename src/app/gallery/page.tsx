@@ -30,39 +30,38 @@ export default function GalleryPage() {
     };
     
     const cachedImages = getCachedImages();
-    setImages(cachedImages);
-
-    const generateAllImages = async () => {
-      const newImages = [...cachedImages];
-      for (const dish of dishes) {
-        // Check if image is already cached to avoid re-generating
-        if (!newImages.some(img => img.dishId === dish.id)) {
-          setLoading((prev) => ({ ...prev, [dish.id]: true }));
-          try {
-            const result = await generateImage({ prompt: dish.name });
-            const newImage = { dishId: dish.id, imageUrl: result.imageUrl };
-            newImages.push(newImage);
-            setImages([...newImages]);
-
-            // Save the updated cache to localStorage
-            try {
-              window.localStorage.setItem(IMAGE_CACHE_KEY, JSON.stringify(newImages));
-            } catch (error) {
-              console.error("Failed to write to localStorage", error);
-            }
-
-          } catch (error) {
-            console.error(`Failed to generate image for ${dish.name}:`, error);
-          } finally {
-            setLoading((prev) => ({ ...prev, [dish.id]: false }));
-          }
-        }
-      }
-    };
-
-    generateAllImages();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (cachedImages.length > 0) {
+      setImages(cachedImages);
+    }
   }, []);
+
+  const handleGenerateImage = async (dishId: number, dishName: string) => {
+    // Avoid regenerating if image already exists
+    if (images.some(img => img.dishId === dishId) || loading[dishId]) {
+      return;
+    }
+
+    setLoading(prev => ({ ...prev, [dishId]: true }));
+    try {
+      const result = await generateImage({ prompt: dishName });
+      const newImage = { dishId: dishId, imageUrl: result.imageUrl };
+      
+      setImages(prevImages => {
+        const updatedImages = [...prevImages, newImage];
+        try {
+          window.localStorage.setItem(IMAGE_CACHE_KEY, JSON.stringify(updatedImages));
+        } catch (error) {
+          console.error("Failed to write to localStorage", error);
+        }
+        return updatedImages;
+      });
+
+    } catch (error) {
+      console.error(`Failed to generate image for ${dishName}:`, error);
+    } finally {
+      setLoading(prev => ({ ...prev, [dishId]: false }));
+    }
+  };
 
   return (
     <div className="container mx-auto py-8">
@@ -71,25 +70,27 @@ export default function GalleryPage() {
           Dish Gallery
         </h1>
         <p className="mt-3 text-lg text-muted-foreground sm:mt-4">
-          AI-generated images of our delicious offerings.
+          AI-generated images of our delicious offerings. Click a card to generate an image.
         </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {dishes.map((dish) => {
           const generatedImage = images.find((img) => img.dishId === dish.id);
-          const isLoading = loading[dish.id] ?? !generatedImage;
+          const isLoading = loading[dish.id];
 
           return (
-            <Card key={dish.id}>
+            <Card 
+              key={dish.id} 
+              onClick={() => handleGenerateImage(dish.id, dish.name)}
+              className="cursor-pointer"
+            >
               <CardHeader>
                 <CardTitle className="font-headline">{dish.name}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="aspect-square relative">
-                  {isLoading ? (
-                    <Skeleton className="w-full h-full rounded-md" />
-                  ) : generatedImage ? (
+                  {generatedImage ? (
                     <Image
                       src={generatedImage.imageUrl}
                       alt={`AI-generated image of ${dish.name}`}
@@ -97,9 +98,11 @@ export default function GalleryPage() {
                       objectFit="cover"
                       className="rounded-md"
                     />
+                  ) : isLoading ? (
+                    <Skeleton className="w-full h-full rounded-md" />
                   ) : (
                     <div className="w-full h-full rounded-md bg-muted flex items-center justify-center">
-                       <p className="text-sm text-muted-foreground">Error</p>
+                       <p className="text-sm text-center text-muted-foreground">Click to generate</p>
                     </div>
                   )}
                 </div>
