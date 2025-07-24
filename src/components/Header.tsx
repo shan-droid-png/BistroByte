@@ -1,6 +1,6 @@
 'use client';
 
-import { QrCode, ShoppingCart, UtensilsCrossed } from 'lucide-react';
+import { GalleryHorizontal, QrCode, ShoppingCart, UtensilsCrossed } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/hooks/use-cart';
 import { Badge } from '@/components/ui/badge';
@@ -8,6 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Cart } from '@/components/Cart';
 import { QrCodeDialog } from '@/components/QrCodeDialog';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import Link from 'next/link';
 
 export function Header() {
   const { totalItems } = useCart();
@@ -23,6 +24,12 @@ export function Header() {
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <nav className="flex items-center space-x-2">
+            <Link href="/gallery" passHref>
+              <Button variant="ghost" size="icon">
+                <GalleryHorizontal className="h-5 w-5" />
+                <span className="sr-only">Image Gallery</span>
+              </Button>
+            </Link>
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant="ghost" size="icon">
