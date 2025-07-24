@@ -53,7 +53,7 @@ export function Cart() {
                     <div className="flex-grow">
                       <p className="font-semibold">{item.dish.name}</p>
                       <p className="text-sm text-muted-foreground">
-                        ${item.dish.price.toFixed(2)}
+                        ₹{item.dish.price.toFixed(2)}
                       </p>
                       <div className="mt-2 flex items-center gap-2">
                         <Button
@@ -77,7 +77,7 @@ export function Cart() {
                     </div>
                     <div className="flex flex-col items-end gap-2">
                        <p className="font-semibold">
-                        ${(item.dish.price * item.quantity).toFixed(2)}
+                       ₹{(item.dish.price * item.quantity).toFixed(2)}
                        </p>
                        <Button
                         variant="ghost"
@@ -97,7 +97,7 @@ export function Cart() {
                 <Separator />
                 <div className="flex justify-between font-bold text-lg">
                   <span>Total</span>
-                  <span>${totalPrice.toFixed(2)}</span>
+                  <span>₹{totalPrice.toFixed(2)}</span>
                 </div>
                 <Button className="w-full" size="lg" onClick={handlePlaceOrder}>
                   Place Order

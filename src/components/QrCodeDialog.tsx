@@ -22,7 +22,7 @@ export function QrCodeDialog() {
       <div className="flex items-center justify-center p-4">
         {url ? (
           <img
-            src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(url)}&bgcolor=F2EBD3&color=C06014`}
+            src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(url)}&bgcolor=F7F2EC&color=D9822B`}
             alt="QR Code"
             width={250}
             height={250}

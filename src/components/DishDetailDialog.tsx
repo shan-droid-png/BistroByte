@@ -45,7 +45,7 @@ export function DishDetailDialog({ dish }: DishDetailDialogProps) {
           </DialogHeader>
           
           <div className="my-4">
-              <p className="text-2xl font-bold text-primary">${dish.price.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-primary">₹{dish.price.toFixed(2)}</p>
           </div>
 
           <DialogFooter className="mt-auto flex-col-reverse sm:flex-col-reverse items-stretch gap-2">

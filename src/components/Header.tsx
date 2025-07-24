@@ -1,6 +1,6 @@
 'use client';
 
-import { QrCode, ShoppingCart } from 'lucide-react';
+import { QrCode, ShoppingCart, UtensilsCrossed } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/hooks/use-cart';
 import { Badge } from '@/components/ui/badge';
@@ -17,20 +17,8 @@ export function Header() {
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
         <div className="flex gap-6 md:gap-10">
           <a href="/" className="flex items-center space-x-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="h-6 w-6 text-primary"
-            >
-              <path d="M12 2a10 10 0 1 0 10 10H12V2z" />
-              <path d="M12 12a10 10 0 0 0 10 10V12H12z" />
-            </svg>
-            <span className="inline-block font-bold text-2xl font-headline">BistroByte</span>
+            <UtensilsCrossed className="h-7 w-7 text-primary" />
+            <span className="inline-block font-bold text-2xl font-headline">Rasoi Raj</span>
           </a>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
