@@ -1,10 +1,15 @@
 "use client";
 
-import { dishes } from '@/lib/data';
+import { useState } from 'react';
+import { dishes, categories } from '@/lib/data';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Image from 'next/image';
+import { Button } from '@/components/ui/button';
 
 export default function GalleryPage() {
+  const [selectedCategory, setSelectedCategory] = useState<string>(categories[0].id);
+
+  const filteredDishes = dishes.filter(dish => dish.category === selectedCategory);
 
   return (
     <div className="container mx-auto py-8">
@@ -17,8 +22,22 @@ export default function GalleryPage() {
         </p>
       </div>
 
+      <div className="mb-8 flex flex-wrap justify-center gap-2">
+        {categories.map((category) => (
+          <Button
+            key={category.id}
+            variant={selectedCategory === category.id ? 'default' : 'outline'}
+            onClick={() => setSelectedCategory(category.id)}
+            className="gap-2 transition-all"
+          >
+            <category.icon className="h-4 w-4" />
+            <span>{category.name}</span>
+          </Button>
+        ))}
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {dishes.map((dish) => {
+        {filteredDishes.map((dish) => {
           return (
             <Card 
               key={dish.id}
