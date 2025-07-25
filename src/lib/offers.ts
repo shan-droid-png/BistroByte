@@ -5,7 +5,7 @@ export const offers: Offer[] = [
       id: 1,
       title: '20% OFF Biryanis!',
       description: 'Aromatic and flavorful Biryanis at a special price, only for today. A deal you can\'t resist!',
-      image: 'https://placehold.co/600x400.png',
+      image: 'https://images.unsplash.com/photo-1701579231305-d84d8af9a3fd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxiaXJ5YW5pfGVufDB8fHx8MTc1MzQyNTk3OXww&ixlib=rb-4.1.0&q=80&w=1080',
       dataAiHint: 'biryani promotion',
       cta: 'Order Now',
     },
