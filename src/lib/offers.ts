@@ -13,7 +13,7 @@ export const offers: Offer[] = [
       id: 2,
       title: 'Thali + Lassi Combo',
       description: 'Experience a complete meal with our special Thali and a refreshing Sweet Lassi for just ₹299.',
-      image: 'https://images.unsplash.com/photo-1596819659877-a740ed357e32?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxJbmRpYW4lMjB0aGFsaXxlbnwwfHx8fDE3NTk2Nzk2NDF8MA&ixlib=rb-4.1.0&q=80&w=1080',
+      image: 'https://images.unsplash.com/photo-1680993032090-1ef7ea9b51e5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0aGFsaXxlbnwwfHx8fDE3NTM0MjQ2MzR8MA&ixlib=rb-4.1.0&q=80&w=1080',
       dataAiHint: 'thali',
       cta: 'Try Today',
     },
