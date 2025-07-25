@@ -37,7 +37,7 @@ export const offers: Offer[] = [
       id: 5,
       title: 'Festive Special Offer',
       description: 'Celebrate with us! Get a free dessert on all orders above ₹500. A sweet end to your meal.',
-      image: 'https://placehold.co/600x400.png',
+      image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxkZXNzZXJ0fGVufDB8fHx8MTc1MzQyNjA5Mnww&ixlib=rb-4.1.0&q=80&w=1080',
       dataAiHint: 'dessert festival',
       cta: 'Claim Offer',
     },
