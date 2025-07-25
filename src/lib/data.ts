@@ -28,7 +28,7 @@ export const dishes: Dish[] = [
     name: 'Chicken Malai Tikka',
     description: 'Creamy chicken cubes marinated in cheese, cream, and cardamom.',
     price: 270,
-    image: 'https://images.unsplash.com/photo-1626082895914-834f899738f6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxDaGlja2VuJTIwTWFsYWklMjBUaWtrYXxlbnwwfHx8fDE3NTk2Nzk0MDd8MA&ixlib=rb-4.1.0&q=80&w=1080',
+    image: 'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMnx8Y2hpY2tlbiUyMGRpc2h8ZW58MHx8fHwxNzUzNDI1NzAwfDA&ixlib=rb-4.1.0&q=80&w=1080',
     video: 'https://storage.googleapis.com/stabl-media/rasoi-raj/videos/chicken-malai-tikka.mp4',
     dataAiHint: 'chicken malai tikka',
     category: 'starters',
@@ -349,4 +349,5 @@ export const dishes: Dish[] = [
   },
 ];
 
+    
     
