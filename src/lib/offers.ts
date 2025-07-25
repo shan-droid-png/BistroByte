@@ -21,7 +21,7 @@ export const offers: Offer[] = [
       id: 3,
       title: 'New: Butter Garlic Naan',
       description: 'Introducing our new Butter Garlic Naan, baked to perfection. Aromatic and delicious, only ₹55.',
-      image: 'https://placehold.co/600x400.png',
+      image: 'https://images.unsplash.com/photo-1697155406014-04dc649b0953?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxuYWFufGVufDB8fHx8MTc1MzQyNTkzMHww&ixlib=rb-4.1.0&q=80&w=1080',
       dataAiHint: 'garlic naan',
       cta: 'Taste Now',
     },
