@@ -39,7 +39,7 @@ export const dishes: Dish[] = [
     name: 'Vegetable Spring Rolls',
     description: 'Crispy rolls stuffed with seasoned veggies and served with sweet chili sauce.',
     price: 180,
-    image: 'https://storage.googleapis.com/stabl-media/rasoi-raj/samosa.jpg',
+    image: 'https://images.unsplash.com/photo-1695712641569-05eee7b37b6d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzcHJpbmclMjByb2xsfGVufDB8fHx8MTc1MzQyNTc2OXww&ixlib=rb-4.1.0&q=80&w=1080',
     video: 'https://storage.googleapis.com/stabl-media/rasoi-raj/videos/samosa.mp4',
     dataAiHint: 'spring rolls',
     category: 'starters',
