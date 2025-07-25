@@ -61,7 +61,7 @@ export const dishes: Dish[] = [
     name: 'Tandoori Prawns',
     description: 'Fresh prawns marinated in tandoori spices and grilled to smoky perfection.',
     price: 350,
-    image: 'https://storage.googleapis.com/stabl-media/rasoi-raj/tandoori-prawns.jpg',
+    image: 'https://images.unsplash.com/photo-1625943553852-781c6dd46faa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxwcmF3bnN8ZW58MHx8fHwxNzUzNDI1NTA2fDA&ixlib=rb-4.1.0&q=80&w=1080',
     video: 'https://storage.googleapis.com/stabl-media/rasoi-raj/videos/tandoori-prawns.mp4',
     dataAiHint: 'tandoori prawns',
     category: 'starters',
