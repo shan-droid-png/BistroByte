@@ -29,7 +29,7 @@ export const offers: Offer[] = [
       id: 4,
       title: 'Happy Hour: 4-6 PM',
       description: 'Get a complimentary Masala Chai with any order during our happy hours. The perfect evening treat!',
-      image: 'https://placehold.co/600x400.png',
+      image: 'https://images.unsplash.com/photo-1683533699004-7f6b9e5a073f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxjaGFpfGVufDB8fHx8MTc1MzQyNTM1OHww&ixlib=rb-4.1.0&q=80&w=1080',
       dataAiHint: 'happy hour',
       cta: 'View Menu',
     },
