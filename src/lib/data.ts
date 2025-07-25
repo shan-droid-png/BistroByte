@@ -50,7 +50,7 @@ export const dishes: Dish[] = [
     name: 'Hara Bhara Kabab',
     description: 'Spinach and peas patties blended with Indian herbs and shallow fried.',
     price: 160,
-    image: 'https://storage.googleapis.com/stabl-media/rasoi-raj/hara-bhara-kabab.jpg',
+    image: 'https://images.unsplash.com/photo-1571839040405-c5d2f471ad2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxNXx8a2FiYWJ8ZW58MHx8fHwxNzUzNDI1ODI4fDA&ixlib=rb-4.1.0&q=80&w=1080',
     video: 'https://storage.googleapis.com/stabl-media/rasoi-raj/videos/hara-bhara-kabab.mp4',
     dataAiHint: 'hara bhara kabab',
     category: 'starters',
