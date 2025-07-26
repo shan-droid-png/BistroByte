@@ -33,6 +33,12 @@ const nextConfig: NextConfig = {
         hostname: 'www.indianhealthyrecipes.com',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.solara.in',
+        port: '',
+        pathname: '/**',
       }
     ],
   },

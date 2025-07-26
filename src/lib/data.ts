@@ -84,7 +84,7 @@ export const dishes: Dish[] = [
     name: 'Chole Masala',
     description: 'Punjabi-style spicy chickpeas cooked with onion-tomato masala.',
     price: 180,
-    image: 'https://storage.googleapis.com/stabl-media/rasoi-raj/chole-masala.jpg',
+    image: 'https://www.solara.in/cdn/shop/articles/Chole_curry.jpg?v=1711521756&width=2048',
     video: 'https://storage.googleapis.com/stabl-media/rasoi-raj/videos/chole-masala.mp4',
     dataAiHint: 'chole masala',
     category: 'main-veg',
