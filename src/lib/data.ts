@@ -73,7 +73,7 @@ export const dishes: Dish[] = [
     name: 'Paneer Butter Masala',
     description: 'Soft paneer cubes in a creamy tomato-based gravy with butter and spices.',
     price: 240,
-    image: 'https://storage.googleapis.com/stabl-media/rasoi-raj/palak-paneer.jpg',
+    image: 'https://images.unsplash.com/photo-1565557623262-b27e252489a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxQYW5lZXIlMjBCdXR0ZXIlMjBNYXNhbGF8ZW58MHx8fHwxNzU5NjgyNTk3fDA&ixlib=rb-4.1.0&q=80&w=1080',
     video: 'https://storage.googleapis.com/stabl-media/rasoi-raj/videos/palak-paneer.mp4',
     dataAiHint: 'paneer butter masala',
     category: 'main-veg',
