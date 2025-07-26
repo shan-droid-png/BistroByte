@@ -39,7 +39,11 @@ const nextConfig: NextConfig = {
         hostname: 'www.solara.in',
         port: '',
         pathname: '/**',
-      }
+      },
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
     ],
   },
 };
